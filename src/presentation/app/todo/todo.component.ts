@@ -10,15 +10,15 @@ const updateCompleteUseCaseFactory = new UpdateCompletedStatusUseCase();
 @Component({
   selector: 'app-todo',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-  ],
+  imports: [CommonModule, FormsModule],
   providers: [
-    { provide: UpdateCompletedStatusUseCase, useValue: updateCompleteUseCaseFactory },
+    {
+      provide: UpdateCompletedStatusUseCase,
+      useValue: updateCompleteUseCaseFactory,
+    },
   ],
   templateUrl: './todo.component.html',
-  styleUrl: './todo.component.scss'
+  styleUrl: './todo.component.scss',
 })
 export class TodoComponent {
   @Input() todo: Todo | undefined = undefined;
@@ -26,12 +26,16 @@ export class TodoComponent {
   @Output() delete = new EventEmitter<Todo>();
   @Output() saveTodo = new EventEmitter<void>();
 
-  constructor(private updateCompletedStatusUseCase: UpdateCompletedStatusUseCase) {}
+  constructor(
+    private updateCompletedStatusUseCase: UpdateCompletedStatusUseCase
+  ) {}
 
   public completeStatusChanged(): void {
-    this.updateCompletedStatusUseCase.execute(this.todo!, this.todo!.completed).subscribe({
-      next: () => this.saveTodo.emit()
-    });
+    this.updateCompletedStatusUseCase
+      .execute(this.todo!, this.todo!.completed)
+      .subscribe({
+        next: () => this.saveTodo.emit(),
+      });
   }
 
   public deleteTodo(): void {

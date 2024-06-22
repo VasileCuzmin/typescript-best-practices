@@ -1,7 +1,7 @@
 export class Todo {
   constructor(
     public title: string,
-    public completed: boolean,
+    public completed: boolean
   ) {}
 
   public updateCompleted(status: boolean) {

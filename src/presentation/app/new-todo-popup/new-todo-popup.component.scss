@@ -18,7 +18,7 @@ section {
   background: #fff;
   width: max-content;
   padding: 2.5rem;
-  border-radius: .35rem;
+  border-radius: 0.35rem;
 }
 
 header {
@@ -65,8 +65,8 @@ label:not(:last-child) {
 input {
   margin: 0 0.75rem 0 3.75rem;
 
-  &[type="checkbox"] {
-    margin-left: .75rem;
+  &[type='checkbox'] {
+    margin-left: 0.75rem;
   }
 }
 

@@ -8,7 +8,7 @@ import { Todo } from '../../../domain/entities';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './new-todo-popup.component.html',
-  styleUrl: './new-todo-popup.component.scss'
+  styleUrl: './new-todo-popup.component.scss',
 })
 export class NewTodoPopupComponent {
   @Output() newTodo = new EventEmitter<Todo>();

@@ -3,7 +3,7 @@ import { Todo } from './todo';
 export class TodoList {
   constructor(
     public title: string,
-    public todos: Todo[],
+    public todos: Todo[]
   ) {}
 
   public addTodo(todo: Todo): boolean | string {
@@ -25,7 +25,7 @@ export class TodoList {
   }
 
   public deleteTodo(todo: Todo) {
-    this.todos = this.todos.filter((t) => t.title !== todo.title);
+    this.todos = this.todos.filter(t => t.title !== todo.title);
   }
 
   public getAllTodos(): Todo[] {

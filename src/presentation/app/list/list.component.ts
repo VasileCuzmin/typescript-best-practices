@@ -5,7 +5,11 @@ import { CommonModule } from '@angular/common';
 import { NewTodoPopupComponent } from '../new-todo-popup/new-todo-popup.component';
 import { TodoComponent } from '../todo/todo.component';
 import { Todo, TodoList } from '../../../domain/entities';
-import { CreateTodoUseCase, AddTodoUseCase, DeleteToDoUseCase } from '../../../domain/use-cases';
+import {
+  CreateTodoUseCase,
+  AddTodoUseCase,
+  DeleteToDoUseCase,
+} from '../../../domain/use-cases';
 
 const createTodoUseCaseFactory = new CreateTodoUseCase();
 const addTodoUseCaseFactory = new AddTodoUseCase();
@@ -14,19 +18,14 @@ const deleteTodoUseCaseFactory = new DeleteToDoUseCase();
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [
-    FormsModule,
-    CommonModule,
-    NewTodoPopupComponent,
-    TodoComponent,
-  ],
+  imports: [FormsModule, CommonModule, NewTodoPopupComponent, TodoComponent],
   providers: [
     { provide: CreateTodoUseCase, useValue: createTodoUseCaseFactory },
     { provide: AddTodoUseCase, useValue: addTodoUseCaseFactory },
     { provide: DeleteToDoUseCase, useValue: deleteTodoUseCaseFactory },
   ],
   templateUrl: './list.component.html',
-  styleUrl: './list.component.scss'
+  styleUrl: './list.component.scss',
 })
 export class ListComponent {
   @Input() public list: TodoList | undefined = undefined;
@@ -39,7 +38,7 @@ export class ListComponent {
   constructor(
     private createTodo: CreateTodoUseCase,
     private addTodoUseCase: AddTodoUseCase,
-    private deleteTodoUseCase: DeleteToDoUseCase,
+    private deleteTodoUseCase: DeleteToDoUseCase
   ) {}
 
   public showAddForm(): void {
@@ -56,7 +55,7 @@ export class ListComponent {
         this.addTodoUseCase.execute(this.list!, todo).subscribe();
         this.closeAddForm();
         this.saveList.emit();
-      }
+      },
     });
   }
 
@@ -66,7 +65,7 @@ export class ListComponent {
 
   public deleteTodo(todo: Todo): void {
     this.deleteTodoUseCase.execute(this.list!, todo).subscribe({
-      next: () => this.saveList.emit()
+      next: () => this.saveList.emit(),
     });
   }
 }

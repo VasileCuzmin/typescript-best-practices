@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './new-list-popup.component.html',
-  styleUrl: './new-list-popup.component.scss'
+  styleUrl: './new-list-popup.component.scss',
 })
 export class NewListPopupComponent {
   @Output() createList = new EventEmitter<string>();

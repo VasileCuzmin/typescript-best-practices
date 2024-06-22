@@ -8,10 +8,9 @@ describe('NewTodoPopupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NewTodoPopupComponent]
-    })
-    .compileComponents();
-    
+      imports: [NewTodoPopupComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(NewTodoPopupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

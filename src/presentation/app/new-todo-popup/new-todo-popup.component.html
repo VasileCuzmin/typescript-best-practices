@@ -15,7 +15,12 @@
           <input name="completed" type="checkbox" [(ngModel)]="completed" />
         </label>
       </fieldset>
-      <button title="Add todo" type="submit" class="bx bx-plus" [disabled]="!newListForm.valid" (click)="createNewTodo($event)"></button>
+      <button
+        title="Add todo"
+        type="submit"
+        class="bx bx-plus"
+        [disabled]="!newListForm.valid"
+        (click)="createNewTodo($event)"></button>
     </form>
   </div>
 </section>

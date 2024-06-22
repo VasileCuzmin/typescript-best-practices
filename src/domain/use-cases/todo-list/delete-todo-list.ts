@@ -5,6 +5,6 @@ import { UseCase } from '../use-case.interface';
 
 export class DeleteTodoListUseCase implements UseCase<TodoList[]> {
   execute(title: string, lists: TodoList[]): Observable<TodoList[]> {
-    return of(lists.filter((list) => list.title !== title));
+    return of(lists.filter(list => list.title !== title));
   }
 }

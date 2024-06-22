@@ -8,14 +8,14 @@ div {
   }
 }
 
-input[type="checkbox"] {
+input[type='checkbox'] {
   -webkit-appearance: none;
   appearance: none;
   background-color: #fff;
   margin: 0 1rem 0 0;
   width: 1.5rem;
   height: 1.5rem;
-  border: 1px solid #51555C;
+  border: 1px solid #51555c;
   border-radius: 0.25rem;
   transform: translateY(0.25rem);
   position: relative;
@@ -27,8 +27,8 @@ input[type="checkbox"] {
     position: absolute;
     box-shadow: inset 1em 1em var(--form-control-color);
     font-size: 2rem;
-    left: -.35rem;
-    top: -.25rem;
+    left: -0.35rem;
+    top: -0.25rem;
   }
 
   &:checked {

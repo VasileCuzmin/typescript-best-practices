@@ -9,7 +9,12 @@
         List name:
         <input name="listName" [(ngModel)]="listName" required />
       </label>
-      <button title="Create" type="submit" class="bx bx-plus" [disabled]="!newListForm.valid" (click)="createNewList($event)"></button>
+      <button
+        title="Create"
+        type="submit"
+        class="bx bx-plus"
+        [disabled]="!newListForm.valid"
+        (click)="createNewList($event)"></button>
     </form>
   </div>
 </section>
