@@ -1,0 +1,29 @@
+<div class="outer-wrap">
+  <div class="inner-wrap">
+    <header>
+      <h1>Clean Architecture Angular Todo app</h1>
+      <div>
+        <button title="Add new list" class="bx bx-list-plus" (click)="showAddForm()"></button>
+        <button title="Save lists" class="bx bxs-save" (click)="saveLists()"></button>
+      </div>
+    </header>
+    <main class="main">
+      <div class="content">
+        <app-new-list-popup *ngIf="showNewListForm" (createList)="createNewList($event)" (closeModal)="closeAddForm()" />
+    
+        <div class="lists">
+          <ng-container *ngIf="lists.length; else noLists">
+            <app-list *ngFor="let list of lists" [list]="list" (deleteList)="deleteTodoList($event)" (saveList)="saveLists()"></app-list>
+          </ng-container>
+        </div>
+    
+        <ng-template #noLists>
+          <div class="no-lists">
+            <h2>You don't have any lists!</h2>
+            <p>Add one now? <button title="Add new list" class="bx bx-list-plus" (click)="showAddForm()"></button></p>
+          </div>
+        </ng-template>
+      </div>
+    </main>
+  </div>
+</div>
