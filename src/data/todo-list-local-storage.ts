@@ -26,7 +26,7 @@ export class TodoListLocalStorage extends TodoListRepository {
     try {
       localStorage.setItem('todo-lists', JSON.stringify(lists));
       return null;
-    } catch (error) {
+    } catch {
       err = 'An error occured';
     }
 

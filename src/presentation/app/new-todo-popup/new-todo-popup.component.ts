@@ -5,7 +5,6 @@ import { Todo } from '../../../domain/entities';
 
 @Component({
   selector: 'app-new-todo-popup',
-  standalone: true,
   imports: [FormsModule],
   templateUrl: './new-todo-popup.component.html',
   styleUrl: './new-todo-popup.component.scss',

@@ -3,7 +3,6 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-new-list-popup',
-  standalone: true,
   imports: [FormsModule],
   templateUrl: './new-list-popup.component.html',
   styleUrl: './new-list-popup.component.scss',

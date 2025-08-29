@@ -1,5 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { Todo } from '../../../domain/entities';
@@ -9,8 +8,7 @@ const updateCompleteUseCaseFactory = new UpdateCompletedStatusUseCase();
 
 @Component({
   selector: 'app-todo',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   providers: [
     {
       provide: UpdateCompletedStatusUseCase,
@@ -21,14 +19,12 @@ const updateCompleteUseCaseFactory = new UpdateCompletedStatusUseCase();
   styleUrl: './todo.component.scss',
 })
 export class TodoComponent {
+  private updateCompletedStatusUseCase = inject(UpdateCompletedStatusUseCase);
+
   @Input() todo: Todo | undefined = undefined;
 
   @Output() delete = new EventEmitter<Todo>();
   @Output() saveTodo = new EventEmitter<void>();
-
-  constructor(
-    private updateCompletedStatusUseCase: UpdateCompletedStatusUseCase
-  ) {}
 
   public completeStatusChanged(): void {
     this.updateCompletedStatusUseCase

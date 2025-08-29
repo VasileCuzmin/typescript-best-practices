@@ -1,3 +1,4 @@
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
 <section (click)="cancel()">
   <div class="modal" (click)="$event.stopImmediatePropagation()">
     <header>
@@ -14,7 +15,8 @@
         type="submit"
         class="bx bx-plus"
         [disabled]="!newListForm.valid"
-        (click)="createNewList($event)"></button>
+        (click)="createNewList($event)"
+        (keyup.enter)="createNewList($event)"></button>
     </form>
   </div>
 </section>

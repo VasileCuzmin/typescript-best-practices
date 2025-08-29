@@ -9,6 +9,7 @@ export class TodoList {
   public addTodo(todo: Todo): boolean | string {
     let exists;
 
+    // eslint-disable-next-line @typescript-eslint/prefer-for-of
     for (let count = 0; count < this.todos.length; count++) {
       if (this.todos[count]?.title === todo.title) {
         exists = true;

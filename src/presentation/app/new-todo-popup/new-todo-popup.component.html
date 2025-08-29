@@ -1,8 +1,13 @@
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
 <section (click)="cancel()">
   <div class="modal" (click)="$event.stopImmediatePropagation()">
     <header>
       <h1>Add new todo</h1>
-      <button title="Cancel" class="bx bx-plus" (click)="cancel()"></button>
+      <button
+        title="Cancel"
+        class="bx bx-plus"
+        (click)="cancel()"
+        (keypress.enter)="cancel()"></button>
     </header>
     <form #newListForm="ngForm">
       <fieldset>
@@ -20,7 +25,8 @@
         type="submit"
         class="bx bx-plus"
         [disabled]="!newListForm.valid"
-        (click)="createNewTodo($event)"></button>
+        (click)="createNewTodo($event)"
+        (keypress.enter)="createNewTodo($event)"></button>
     </form>
   </div>
 </section>

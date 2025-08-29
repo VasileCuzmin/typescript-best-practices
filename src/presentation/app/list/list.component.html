@@ -1,41 +1,45 @@
-<article *ngIf="list">
-  <header>
-    <h1>{{ list.title }}</h1>
-    <div>
-      <button
-        title="Add todo"
-        class="bx bxs-file-plus"
-        *ngIf="list.todos.length"
-        (click)="showAddForm()"></button>
-      <button
-        title="Delete list"
-        class="bx bxs-trash delete"
-        (click)="deleteTodoList()"></button>
-    </div>
-  </header>
-  <ng-container *ngIf="list.todos.length; else noTodos">
-    <ol>
-      <li *ngFor="let todo of list.todos">
-        <app-todo
-          [todo]="todo"
-          (delete)="deleteTodo($event)"
-          (saveTodo)="saveList.emit()"></app-todo>
-      </li>
-    </ol>
-  </ng-container>
+@if (list) {
+  <article>
+    <header>
+      <h1>{{ list.title }}</h1>
+      <div>
+        @if (list.todos.length) {
+          <button
+            title="Add todo"
+            class="bx bxs-file-plus"
+            (click)="showAddForm()"></button>
+        }
+        <button
+          title="Delete list"
+          class="bx bxs-trash delete"
+          (click)="deleteTodoList()"></button>
+      </div>
+    </header>
+    @if (list.todos.length) {
+      <ol>
+        @for (todo of list.todos; track todo) {
+          <li>
+            <app-todo
+              [todo]="todo"
+              (delete)="deleteTodo($event)"
+              (saveTodo)="saveList.emit()"></app-todo>
+          </li>
+        }
+      </ol>
+    } @else {
+      <div class="content">
+        <p>You don't have any todos in this list! Add one now?</p>
+        <button
+          title="Add todo"
+          class="bx bx-list-plus"
+          (click)="showAddForm()"></button>
+      </div>
+    }
+  </article>
+}
 
-  <ng-template #noTodos>
-    <div class="content">
-      <p>You don't have any todos in this list! Add one now?</p>
-      <button
-        title="Add todo"
-        class="bx bx-list-plus"
-        (click)="showAddForm()"></button>
-    </div>
-  </ng-template>
-</article>
-
-<app-new-todo-popup
-  *ngIf="showAddTodoForm"
-  (newTodo)="addTodo($event)"
-  (closeModal)="closeAddForm()"></app-new-todo-popup>
+@if (showAddTodoForm) {
+  <app-new-todo-popup
+    (newTodo)="addTodo($event)"
+    (closeModal)="closeAddForm()"></app-new-todo-popup>
+}

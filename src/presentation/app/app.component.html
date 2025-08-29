@@ -15,33 +15,33 @@
     </header>
     <main class="main">
       <div class="content">
-        <app-new-list-popup
-          *ngIf="showNewListForm"
-          (createList)="createNewList($event)"
-          (closeModal)="closeAddForm()" />
+        @if (showNewListForm) {
+          <app-new-list-popup
+            (createList)="createNewList($event)"
+            (closeModal)="closeAddForm()" />
+        }
 
         <div class="lists">
-          <ng-container *ngIf="lists.length; else noLists">
-            <app-list
-              *ngFor="let list of lists"
-              [list]="list"
-              (deleteList)="deleteTodoList($event)"
-              (saveList)="saveLists()"></app-list>
-          </ng-container>
+          @if (lists.length) {
+            @for (list of lists; track list) {
+              <app-list
+                [list]="list"
+                (deleteList)="deleteTodoList($event)"
+                (saveList)="saveLists()"></app-list>
+            }
+          } @else {
+            <div class="no-lists">
+              <h2>You don't have any lists!</h2>
+              <p>
+                Add one now?
+                <button
+                  title="Add new list"
+                  class="bx bx-list-plus"
+                  (click)="showAddForm()"></button>
+              </p>
+            </div>
+          }
         </div>
-
-        <ng-template #noLists>
-          <div class="no-lists">
-            <h2>You don't have any lists!</h2>
-            <p>
-              Add one now?
-              <button
-                title="Add new list"
-                class="bx bx-list-plus"
-                (click)="showAddForm()"></button>
-            </p>
-          </div>
-        </ng-template>
       </div>
     </main>
   </div>

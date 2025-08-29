@@ -1,6 +1,5 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 
 import { NewTodoPopupComponent } from '../new-todo-popup/new-todo-popup.component';
 import { TodoComponent } from '../todo/todo.component';
@@ -17,8 +16,7 @@ const deleteTodoUseCaseFactory = new DeleteToDoUseCase();
 
 @Component({
   selector: 'app-list',
-  standalone: true,
-  imports: [FormsModule, CommonModule, NewTodoPopupComponent, TodoComponent],
+  imports: [FormsModule, NewTodoPopupComponent, TodoComponent],
   providers: [
     { provide: CreateTodoUseCase, useValue: createTodoUseCaseFactory },
     { provide: AddTodoUseCase, useValue: addTodoUseCaseFactory },
@@ -28,18 +26,16 @@ const deleteTodoUseCaseFactory = new DeleteToDoUseCase();
   styleUrl: './list.component.scss',
 })
 export class ListComponent {
+  private createTodo = inject(CreateTodoUseCase);
+  private addTodoUseCase = inject(AddTodoUseCase);
+  private deleteTodoUseCase = inject(DeleteToDoUseCase);
+
   @Input() public list: TodoList | undefined = undefined;
 
   @Output() deleteList = new EventEmitter<string>();
   @Output() saveList = new EventEmitter<void>();
 
   public showAddTodoForm = false;
-
-  constructor(
-    private createTodo: CreateTodoUseCase,
-    private addTodoUseCase: AddTodoUseCase,
-    private deleteTodoUseCase: DeleteToDoUseCase
-  ) {}
 
   public showAddForm(): void {
     this.showAddTodoForm = true;

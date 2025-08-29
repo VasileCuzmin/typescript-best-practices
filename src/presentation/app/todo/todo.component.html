@@ -1,15 +1,17 @@
-<div *ngIf="todo">
-  <form #completedForm="ngForm">
-    <input
-      title="Mark completed"
-      name="completed"
-      type="checkbox"
-      [(ngModel)]="todo.completed"
-      (change)="completeStatusChanged()" />
-  </form>
-  <p>{{ todo.title }}</p>
-  <button
-    title="Delete todo"
-    class="bx bxs-trash delete"
-    (click)="deleteTodo()"></button>
-</div>
+@if (todo) {
+  <div>
+    <form #completedForm="ngForm">
+      <input
+        title="Mark completed"
+        name="completed"
+        type="checkbox"
+        [(ngModel)]="todo.completed"
+        (change)="completeStatusChanged()" />
+    </form>
+    <p>{{ todo.title }}</p>
+    <button
+      title="Delete todo"
+      class="bx bxs-trash delete"
+      (click)="deleteTodo()"></button>
+  </div>
+}

@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
+import { Component, OnInit, inject } from '@angular/core';
 import { NewListPopupComponent } from './new-list-popup/new-list-popup.component';
 import { ListComponent } from './list/list.component';
 import {
@@ -22,8 +20,7 @@ const getTodoListsFactory = (listRepository: TodoListRepository) =>
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [CommonModule, NewListPopupComponent, ListComponent],
+  imports: [NewListPopupComponent, ListComponent],
   providers: [
     {
       provide: CreateTodoListUseCase,
@@ -49,15 +46,13 @@ const getTodoListsFactory = (listRepository: TodoListRepository) =>
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
+  private createTodoListUseCase = inject(CreateTodoListUseCase);
+  private saveTodoListsUseCase = inject(SaveTodoListsUseCase);
+  private getTodoListsUseCase = inject(GetTodoListsUseCase);
+  private deleteTodoListUseCase = inject(DeleteTodoListUseCase);
+
   public showNewListForm = false;
   public lists: TodoList[] = [];
-
-  constructor(
-    private createTodoListUseCase: CreateTodoListUseCase,
-    private saveTodoListsUseCase: SaveTodoListsUseCase,
-    private getTodoListsUseCase: GetTodoListsUseCase,
-    private deleteTodoListUseCase: DeleteTodoListUseCase
-  ) {}
 
   public ngOnInit(): void {
     this.getAllTodoLists();
