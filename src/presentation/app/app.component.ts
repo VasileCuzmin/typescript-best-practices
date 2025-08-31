@@ -10,6 +10,7 @@ import {
 import { TodoListRepository } from '../../domain/repositories/todo-list';
 import { GetDataStore } from '../../domain/utilities/get-data-store';
 import { TodoList } from '../../domain/entities';
+import { Themes } from './themes.enum';
 
 const createTodoListUseCaseFactory = () => new CreateTodoListUseCase();
 const deleteTodoListUseCaseFactory = () => new DeleteTodoListUseCase();
@@ -96,5 +97,22 @@ export class AppComponent implements OnInit {
         this.saveLists();
       },
     });
+  }
+
+  public switchTheme(theme: Themes): void {
+    const unhandled = (_: never): never => _;
+    switch (theme) {
+      case Themes.regular:
+        // handle regular theme
+        break;
+      case Themes.dark:
+        // handle dark theme
+        break;
+      case Themes.highContrast:
+        // handle high contrast
+        break;
+      default:
+        return unhandled(theme);
+    }
   }
 }
