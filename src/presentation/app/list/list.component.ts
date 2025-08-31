@@ -9,6 +9,7 @@ import {
   AddTodoUseCase,
   DeleteToDoUseCase,
 } from '../../../domain/use-cases';
+import { TodoForm } from '../../../domain/utilities/todo-form.interface';
 
 const createTodoUseCaseFactory = new CreateTodoUseCase();
 const addTodoUseCaseFactory = new AddTodoUseCase();
@@ -45,7 +46,7 @@ export class ListComponent {
     this.showAddTodoForm = false;
   }
 
-  public addTodo(event: Todo): void {
+  public addTodo(event: TodoForm): void {
     this.createTodo.execute(event).subscribe({
       next: (todo: Todo) => {
         this.addTodoUseCase.execute(this.list!, todo).subscribe();
