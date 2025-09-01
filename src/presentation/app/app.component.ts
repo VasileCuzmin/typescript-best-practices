@@ -12,6 +12,7 @@ import { GetDataStore } from '../../domain/utilities/get-data-store';
 import { TodoList } from '../../domain/entities';
 import { Themes } from './themes.enum';
 import { logIt } from '../../domain/utilities/logger';
+import { instrument } from '../../domain/utilities/instrument.decorator';
 
 const createTodoListUseCaseFactory = () => new CreateTodoListUseCase();
 const deleteTodoListUseCaseFactory = () => new DeleteTodoListUseCase();
@@ -20,6 +21,7 @@ const saveTodoListsFactory = (listRepository: TodoListRepository) =>
 const getTodoListsFactory = (listRepository: TodoListRepository) =>
   new GetTodoListsUseCase(listRepository);
 
+@instrument
 @Component({
   selector: 'app-root',
   imports: [NewListPopupComponent, ListComponent],
