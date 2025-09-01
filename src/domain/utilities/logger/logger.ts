@@ -1,11 +1,17 @@
-import { Log } from './log-types';
+import { Log, LogType, ExtractNonTypeParams } from './log-types';
 
-export function logIt(log: Log): void {
-  switch (log.type) {
+export function logIt<T extends LogType>(
+  log: T,
+  args: ExtractNonTypeParams<Log, T>
+): void {
+  switch (log) {
     case 'INFO':
-      console.log(log.message);
+      console.log(args.message);
       break;
     case 'ERROR':
-      console.log(log.message, log.error.stack);
+      console.log(
+        args.message,
+        (args as ExtractNonTypeParams<Log, 'ERROR'>)['error'].stack
+      );
   }
 }

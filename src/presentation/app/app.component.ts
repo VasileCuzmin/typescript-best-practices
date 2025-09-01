@@ -11,6 +11,7 @@ import { TodoListRepository } from '../../domain/repositories/todo-list';
 import { GetDataStore } from '../../domain/utilities/get-data-store';
 import { TodoList } from '../../domain/entities';
 import { Themes } from './themes.enum';
+import { logIt } from '../../domain/utilities/logger';
 
 const createTodoListUseCaseFactory = () => new CreateTodoListUseCase();
 const deleteTodoListUseCaseFactory = () => new DeleteTodoListUseCase();
@@ -72,6 +73,7 @@ export class AppComponent implements OnInit {
       next: list => {
         this.lists.push(list);
         this.closeAddForm();
+        logIt('INFO', { message: 'New list created!' });
       },
     });
   }
