@@ -91,7 +91,13 @@ export class AppComponent implements OnInit {
   }
 
   public saveLists(): void {
-    this.saveTodoListsUseCase.execute(this.lists).subscribe();
+    this.saveTodoListsUseCase.execute(this.lists).subscribe({
+      next: (result: null | Error) => {
+        if (result instanceof Error) {
+          console.log(result.message);
+        }
+      },
+    });
   }
 
   public deleteTodoList(listTitle: string): void {
