@@ -21,7 +21,7 @@ export class TodoListLocalStorage extends TodoListRepository {
     return lists;
   }
 
-  public saveTodoLists(lists: TodoList[]): null | Error {
+  public saveTodoLists(lists: TodoList[]): null | never {
     const err = new Error();
     try {
       localStorage.setItem('todo-lists', JSON.stringify(lists));
@@ -43,6 +43,6 @@ export class TodoListLocalStorage extends TodoListRepository {
       }
     }
 
-    return err;
+    throw err;
   }
 }
