@@ -1,5 +1,6 @@
 import { TodoListRepository } from '../domain/repositories/todo-list';
 import type { TodoList, Todo } from '../domain/entities';
+import { StorageError } from '../domain/utilities/storage-error';
 
 export class TodoListLocalStorage extends TodoListRepository {
   public getTodoLists(
@@ -21,28 +22,26 @@ export class TodoListLocalStorage extends TodoListRepository {
     return lists;
   }
 
-  public saveTodoLists(lists: TodoList[]): null | never {
-    const err = new Error();
+  public saveTodoLists(lists: TodoList[]): void {
     try {
       localStorage.setItem('todo-lists', JSON.stringify(lists));
-      return null;
     } catch (error: unknown) {
       if (error instanceof DOMException) {
         switch (error.name) {
           case 'SecurityError':
-            err.message =
-              'Access to LocalStorage is denied, todo lists could not be saved. Please enable LocalStorage to use this app';
-            err.cause = error;
-            break;
+            throw new StorageError(
+              error.name,
+              'Access to LocalStorage is denied, todo lists could not be saved. Please enable LocalStorage to use this app',
+              error
+            );
           case 'QuotaExceededError':
-            err.message =
-              'LocalStorage is full up, todo lists could not be saved. Please delete old todo lists and try again';
-            err.cause = error;
-            break;
+            throw new StorageError(
+              error.name,
+              'LocalStorage is full up, todo lists could not be saved. Please delete old todo lists and try again',
+              error
+            );
         }
       }
     }
-
-    throw err;
   }
 }

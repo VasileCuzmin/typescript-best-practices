@@ -13,6 +13,7 @@ import { TodoList } from '../../domain/entities';
 import { Themes } from './themes.enum';
 import { logIt } from '../../domain/utilities/logger';
 import { instrument } from '../../domain/utilities/instrument.decorator';
+import { StorageError } from '../../domain/utilities/storage-error';
 
 const createTodoListUseCaseFactory = () => new CreateTodoListUseCase();
 const deleteTodoListUseCaseFactory = () => new DeleteTodoListUseCase();
@@ -92,8 +93,8 @@ export class AppComponent implements OnInit {
 
   public saveLists(): void {
     this.saveTodoListsUseCase.execute(this.lists).subscribe({
-      error: (err: Error) => {
-        console.log('Subscriber error:', err.message);
+      error: (err: StorageError) => {
+        console.log('Subscriber error:', err.name);
       },
     });
   }
