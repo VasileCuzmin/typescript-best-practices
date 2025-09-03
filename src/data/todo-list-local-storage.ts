@@ -21,13 +21,26 @@ export class TodoListLocalStorage extends TodoListRepository {
     return lists;
   }
 
-  public saveTodoLists(lists: TodoList[]): null | string {
-    let err;
+  public saveTodoLists(lists: TodoList[]): null | Error {
+    const err = new Error();
     try {
       localStorage.setItem('todo-lists', JSON.stringify(lists));
       return null;
-    } catch {
-      err = 'An error occured';
+    } catch (error: unknown) {
+      if (error instanceof DOMException) {
+        switch (error.name) {
+          case 'SecurityError':
+            err.message =
+              'Access to LocalStorage is denied, todo lists could not be saved. Please enable LocalStorage to use this app';
+            err.cause = error;
+            break;
+          case 'QuotaExceededError':
+            err.message =
+              'LocalStorage is full up, todo lists could not be saved. Please delete old todo lists and try again';
+            err.cause = error;
+            break;
+        }
+      }
     }
 
     return err;
