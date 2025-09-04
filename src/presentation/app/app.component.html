@@ -43,6 +43,13 @@
           }
         </div>
       </div>
+      @if (showError) {
+        <app-error
+          [name]="errorName"
+          [message]="errorMessage"
+          (closePopup)="closeErrorPopup()">
+        </app-error>
+      }
     </main>
   </div>
 </div>

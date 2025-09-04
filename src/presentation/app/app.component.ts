@@ -14,6 +14,7 @@ import { Themes } from './themes.enum';
 import { logIt } from '../../domain/utilities/logger';
 import { instrument } from '../../domain/utilities/instrument.decorator';
 import { StorageError } from '../../domain/utilities/storage-error';
+import { ErrorComponent } from './error/error.component';
 
 const createTodoListUseCaseFactory = () => new CreateTodoListUseCase();
 const deleteTodoListUseCaseFactory = () => new DeleteTodoListUseCase();
@@ -25,7 +26,7 @@ const getTodoListsFactory = (listRepository: TodoListRepository) =>
 @instrument
 @Component({
   selector: 'app-root',
-  imports: [NewListPopupComponent, ListComponent],
+  imports: [NewListPopupComponent, ListComponent, ErrorComponent],
   providers: [
     {
       provide: CreateTodoListUseCase,
@@ -58,6 +59,9 @@ export class AppComponent implements OnInit {
 
   public showNewListForm = false;
   public lists: TodoList[] = [];
+  public errorName = '';
+  public errorMessage = '';
+  public showError = false;
 
   public ngOnInit(): void {
     this.getAllTodoLists();
@@ -69,6 +73,10 @@ export class AppComponent implements OnInit {
 
   public closeAddForm(): void {
     this.showNewListForm = false;
+  }
+
+  public closeErrorPopup(): void {
+    this.showError = false;
   }
 
   public createNewList(listName: string): void {
@@ -94,7 +102,9 @@ export class AppComponent implements OnInit {
   public saveLists(): void {
     this.saveTodoListsUseCase.execute(this.lists).subscribe({
       error: (err: StorageError) => {
-        console.log('Subscriber error:', err.name);
+        this.errorName = err.name;
+        this.errorMessage = err.message;
+        this.showError = true;
       },
     });
   }

@@ -1,0 +1,16 @@
+<section tabindex="-1" (click)="close()" (keypress.esc)="close()">
+  <div
+    class="modal"
+    tabindex="-1"
+    (click)="$event.stopImmediatePropagation()"
+    (keypress)="$event.stopImmediatePropagation()">
+    <header>
+      <h1>An Error Occurred</h1>
+      <button title="Close" class="bx bx-plus" (click)="close()"></button>
+    </header>
+    <div>
+      <h2>{{ name }}</h2>
+      <p>{{ message }}</p>
+    </div>
+  </div>
+</section>
