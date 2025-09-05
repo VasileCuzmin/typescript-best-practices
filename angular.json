@@ -72,20 +72,6 @@
             "buildTarget": "clean-angular-todo:build"
           }
         },
-        "test": {
-          "builder": "@angular/build:karma",
-          "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
-            "tsConfig": "tsconfig.spec.json",
-            "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/presentation/favicon.ico",
-              "src/presentation/assets"
-            ],
-            "styles": ["src/presentation/styles.scss"],
-            "scripts": []
-          }
-        },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
