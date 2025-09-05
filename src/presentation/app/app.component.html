@@ -15,11 +15,7 @@
     </header>
     <main class="main">
       <div class="content">
-        @if (showNewListForm) {
-          <app-new-list-popup
-            (createList)="createNewList($event)"
-            (closeModal)="closeAddForm()" />
-        }
+        <router-outlet />
 
         <div class="lists">
           @if (lists.length) {

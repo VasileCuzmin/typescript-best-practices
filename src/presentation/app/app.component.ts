@@ -1,5 +1,7 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { NewListPopupComponent } from './new-list-popup/new-list-popup.component';
+import { Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { RouterOutlet, Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
 import { ListComponent } from './list/list.component';
 import {
   CreateTodoListUseCase,
@@ -15,6 +17,7 @@ import { logIt } from '../../domain/utilities/logger';
 import { instrument } from '../../domain/utilities/instrument.decorator';
 import { StorageError } from '../../domain/utilities/storage-error';
 import { ErrorComponent } from './error/error.component';
+import { NewListPopupService } from './new-list-popup/new-list-popup.service';
 
 const createTodoListUseCaseFactory = () => new CreateTodoListUseCase();
 const deleteTodoListUseCaseFactory = () => new DeleteTodoListUseCase();
@@ -26,7 +29,7 @@ const getTodoListsFactory = (listRepository: TodoListRepository) =>
 @instrument
 @Component({
   selector: 'app-root',
-  imports: [NewListPopupComponent, ListComponent, ErrorComponent],
+  imports: [ListComponent, ErrorComponent, RouterOutlet],
   providers: [
     {
       provide: CreateTodoListUseCase,
@@ -56,6 +59,9 @@ export class AppComponent implements OnInit {
   private saveTodoListsUseCase = inject(SaveTodoListsUseCase);
   private getTodoListsUseCase = inject(GetTodoListsUseCase);
   private deleteTodoListUseCase = inject(DeleteTodoListUseCase);
+  private router = inject(Router);
+  private newListPopupService = inject(NewListPopupService);
+  private destroyRef = inject(DestroyRef);
 
   public showNewListForm = false;
   public lists: TodoList[] = [];
@@ -65,14 +71,30 @@ export class AppComponent implements OnInit {
 
   public ngOnInit(): void {
     this.getAllTodoLists();
+
+    this.newListPopupService.createList$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: listName => {
+          if (listName) {
+            this.createNewList(listName);
+          }
+        },
+      });
+
+    this.newListPopupService.closeList$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => this.closeAddForm(),
+      });
   }
 
   public showAddForm(): void {
-    this.showNewListForm = true;
+    this.router.navigateByUrl('/new-list');
   }
 
   public closeAddForm(): void {
-    this.showNewListForm = false;
+    this.router.navigate(['/']);
   }
 
   public closeErrorPopup(): void {

@@ -1,5 +1,7 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+
+import { NewListPopupService } from './new-list-popup.service';
 
 @Component({
   selector: 'app-new-list-popup',
@@ -8,17 +10,16 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './new-list-popup.component.scss',
 })
 export class NewListPopupComponent {
-  @Output() createList = new EventEmitter<string>();
-  @Output() closeModal = new EventEmitter<void>();
+  private newListPopupService = inject(NewListPopupService);
 
   protected listName = '';
 
   public createNewList(event: Event): void {
     event.preventDefault();
-    this.createList.emit(this.listName);
+    this.newListPopupService.createList$.next(this.listName);
   }
 
   public cancel(): void {
-    this.closeModal.emit();
+    this.newListPopupService.closeList$.next();
   }
 }
