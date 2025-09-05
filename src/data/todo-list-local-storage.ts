@@ -3,23 +3,46 @@ import type { TodoList, Todo } from '../domain/entities';
 import { StorageError } from '../domain/utilities/storage-error';
 
 export class TodoListLocalStorage extends TodoListRepository {
+  private parseListData(json: string): Promise<TodoList[]> {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(JSON.parse(json));
+      });
+    });
+  }
+
+  private mapListsData(
+    lists: TodoList[],
+    TodoConstructor: typeof Todo,
+    ListConstructor: typeof TodoList
+  ): Promise<TodoList[]> {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        const constructedLists = lists.map(list => {
+          const todos = list.todos.map(
+            todo => new TodoConstructor(todo.title, todo.completed)
+          );
+
+          return new ListConstructor(list.title, todos);
+        });
+
+        resolve(constructedLists);
+      });
+    });
+  }
+
   public getTodoLists(
     TodoConstructor: typeof Todo,
     ListConstructor: typeof TodoList
-  ): TodoList[] {
-    const listsData = localStorage.getItem('todo-lists');
-    let lists: TodoList[] = [];
-    if (listsData) {
-      lists = JSON.parse(listsData);
-      lists = lists.map(list => {
-        const todos = list.todos.map(
-          todo => new TodoConstructor(todo.title, todo.completed)
-        );
-        return new ListConstructor(list.title, todos);
-      });
-    }
-
-    return lists;
+  ): Promise<TodoList[]> {
+    return new Promise(resolve => {
+      const listsData = localStorage.getItem('todo-lists');
+      if (listsData) {
+        this.parseListData(listsData).then(lists => {
+          resolve(this.mapListsData(lists, TodoConstructor, ListConstructor));
+        });
+      }
+    });
   }
 
   public saveTodoLists(lists: TodoList[]): void {

@@ -1,4 +1,4 @@
-import { Observable, of } from 'rxjs';
+import { Observable, from } from 'rxjs';
 
 import { TodoList, Todo } from '../../entities';
 import { UseCase } from '../use-case.interface';
@@ -8,6 +8,6 @@ export class GetTodoListsUseCase implements UseCase<TodoList[]> {
   constructor(private todoListRepository: TodoListRepository) {}
 
   execute(): Observable<TodoList[]> {
-    return of(this.todoListRepository.getTodoLists(Todo, TodoList));
+    return from(this.todoListRepository.getTodoLists(Todo, TodoList));
   }
 }
