@@ -141,7 +141,13 @@ export class AppComponent implements OnInit {
   }
 
   public switchTheme(theme: Themes): void {
-    const unhandled = (_: never): never => _;
+    const unhandled = (_: never): never => _; // This function is used to ensure all possible cases are handled in the switch statement.
+    //Why does it work like that?
+    // The `unhandled` function is used to ensure that all possible cases of the `Themes` enum are handled in the switch statement.
+    // If a new theme is added to the `Themes` enum and not handled in the switch, TypeScript will raise a compile-time error.
+    //What is the never type?
+    // The `never` type represents values that never occur. In this context, it is used to indicate that the `unhandled` function should never be called with a valid `Themes` value.
+    // If the `default` case is reached, it means there is an unhandled theme, and the function will throw a compile-time error.
     switch (theme) {
       case Themes.regular:
         // handle regular theme
