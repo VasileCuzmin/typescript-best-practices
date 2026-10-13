@@ -9,6 +9,7 @@ import {
   AddTodoUseCase,
   DeleteToDoUseCase,
 } from '../../../domain/use-cases';
+import { isTodo } from '../../../domain/utilities/is-todo.guard';
 
 const createTodoUseCaseFactory = new CreateTodoUseCase();
 const addTodoUseCaseFactory = new AddTodoUseCase();
@@ -51,6 +52,8 @@ export class ListComponent {
         this.addTodoUseCase.execute(this.list!, todo).subscribe();
         this.closeAddForm();
         this.saveList.emit();
+        if (isTodo(event)) // Check if the event is a valid Todo instance before updating.
+          event.updateCompleted?.(false); // Example usage: mark the new todo as not completed initially.
       },
     });
   }
