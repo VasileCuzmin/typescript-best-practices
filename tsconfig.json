@@ -12,7 +12,7 @@
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
     "allowUnreachableCode": false,
-    "noEmitOnError": true,
+    "noEmitOnError": true, // Prevent emitting/compiling files if there are any errors
     "skipLibCheck": true,
     "esModuleInterop": true,
     "sourceMap": true,
