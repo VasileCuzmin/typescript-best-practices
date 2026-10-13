@@ -26,7 +26,8 @@ const saveTodoListsFactory = (listRepository: TodoListRepository) =>
 const getTodoListsFactory = (listRepository: TodoListRepository) =>
   new GetTodoListsUseCase(listRepository);
 
-@instrument
+@instrument // the AppComponent does not have a custom constructor, but the decorator will still instrument its methods. Why?
+// Because the decorator wraps the class prototype and instruments all its methods regardless of whether a custom constructor is defined.
 @Component({
   selector: 'app-root',
   imports: [ListComponent, ErrorComponent, RouterOutlet],
