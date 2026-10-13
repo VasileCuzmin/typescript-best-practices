@@ -5,3 +5,4 @@ export interface TodoForm {
   title: string;
   completed: boolean;
 }
+//Instead of this one we can use Partial<Todo> when we want to work with partial form data.

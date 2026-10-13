@@ -1,7 +1,8 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { TodoForm } from '../../../domain/utilities/todo-form.interface';
+// import { TodoForm } from '../../../domain/utilities/todo-form.interface';
+import { Todo } from '../../../domain/entities';
 
 @Component({
   selector: 'app-new-todo-popup',
@@ -10,7 +11,7 @@ import { TodoForm } from '../../../domain/utilities/todo-form.interface';
   styleUrl: './new-todo-popup.component.scss',
 })
 export class NewTodoPopupComponent {
-  @Output() newTodo = new EventEmitter<TodoForm>();
+  @Output() newTodo = new EventEmitter<Partial<Todo>>();
   @Output() closeModal = new EventEmitter<void>();
 
   protected title = '';
